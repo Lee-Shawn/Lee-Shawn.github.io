@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>数据结构与算法-双链表</title>
+      <link href="2021/06/04/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E5%8F%8C%E9%93%BE%E8%A1%A8/"/>
+      <url>2021/06/04/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E5%8F%8C%E9%93%BE%E8%A1%A8/</url>
+      
+        <content type="html"><![CDATA[<div class="note info flat"><p>单链表只有一个后继指针，所以只能从前往后遍历，无法向前遍历寻找前面的结点。双链表除了有后继指针之外，还有一个<strong>指向前一个结点的前驱指针</strong>，这样既可以往后遍历，也可以往前遍历。</p></div><h2 id="双链表结点"><a href="#双链表结点" class="headerlink" title="双链表结点"></a>双链表结点</h2><p>双链表有两个指针域和一个数据域，数据域存放数据，两个指针域分别指向<strong>前驱结点</strong>和<strong>后继结点</strong>。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 数据结构与算法 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 算法 </tag>
+            
+            <tag> 数据结构 </tag>
+            
+            <tag> 链表 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>数据结构与算法-单链表</title>
       <link href="2021/06/01/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E5%8D%95%E9%93%BE%E8%A1%A8/"/>
       <url>2021/06/01/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E5%8D%95%E9%93%BE%E8%A1%A8/</url>
