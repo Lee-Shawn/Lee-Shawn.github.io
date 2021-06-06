@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>VirtualBox设置网络连接宿主机</title>
+      <link href="2021/06/06/VirtualBox%E8%AE%BE%E7%BD%AE%E7%BD%91%E7%BB%9C%E8%BF%9E%E6%8E%A5%E5%AE%BF%E4%B8%BB%E6%9C%BA/"/>
+      <url>2021/06/06/VirtualBox%E8%AE%BE%E7%BD%AE%E7%BD%91%E7%BB%9C%E8%BF%9E%E6%8E%A5%E5%AE%BF%E4%B8%BB%E6%9C%BA/</url>
+      
+        <content type="html"><![CDATA[<div class="note info flat"><p>在自己电脑上开发个人项目，有些服务需要安装在 linux 系统上，可以买个云服务器安装，也可以在自己电脑上装个虚拟机安装，这样既方便也是免费的。</p></div><p>在虚拟机上安装完 linux 系统之后，需要配置网络连接才能让虚拟机和宿主机互通，并且连接外网。</p><h2 id="Virtual-Box-网络模式"><a href="#Virtual-Box-网络模式" class="headerlink" title="Virtual Box 网络模式"></a>Virtual Box 网络模式</h2><p>VIrtual Box 有四种网络连接模式，不同的模式下，宿主机和虚拟机的连接情况是不同的。</p><table><thead><tr><th>连通性模式名称</th><th>外部网络</th><th>宿主机（有线网络)</th><th>宿主机（无线网络)</th><th>同宿主机虚拟机</th><th>跨宿主机虚拟机</th></tr></thead><tbody><tr><td>NAT网络</td><td>√</td><td>√</td><td>x</td><td>√</td><td>x</td></tr><tr><td>桥接网卡</td><td>√</td><td>√</td><td>√</td><td>√</td><td>√</td></tr><tr><td>内部网络</td><td>x</td><td>x</td><td>x</td><td>√</td><td>x</td></tr><tr><td>仅主机(Host-Only)网络</td><td>x</td><td>√</td><td>√</td><td>√</td><td>x</td></tr></tbody></table><h2 id="网卡设置"><a href="#网卡设置" class="headerlink" title="网卡设置"></a>网卡设置</h2><p>让虚拟机能和宿主机互通，并能连接外网有多种设置方式。这里选择配置两块网卡的方式，一块网卡的类型是<code>网络地址转换（NAT）</code>，另一块网卡的类型是<code>仅主机（Host-Only）网络</code>。</p><h3 id="Virtual-Box-网卡设置"><a href="#Virtual-Box-网卡设置" class="headerlink" title="Virtual Box 网卡设置"></a>Virtual Box 网卡设置</h3><p>先关闭要配置网卡的系统，点击设置，然后选择网络。启用网卡一，连接方式选择<strong>仅主机(Host-Only)网络</strong>，再启用网卡二，连接方式选择**网络地址转换(NAT)**。</p><h3 id="linux-网络配置"><a href="#linux-网络配置" class="headerlink" title="linux 网络配置"></a>linux 网络配置</h3><ol><li><p>查看宿主机 IP 地址，其中有一个<code>以太网适配器 VirtualBox Host-Only Network</code>，这个网段就是后面虚拟机中要配置的网段。</p></li><li><p>启动 linux 系统，查看网卡信息，然后根据宿主机上的<code>VirtualBox Host-Only Network</code>网段配置 IP。网卡 enp0s8 已经默认配置了 IP 10.0..3.15，我们在另外一块网卡上配置 IP。</p></li><li><p>打开<code>/ect/sysconfig/network-scripts/ifcfg-enp0s3</code> 配置 IP</p></li></ol><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">TYPE=Ethernet</span><br><span class="line">PROXY_METHOD=none</span><br><span class="line">BROWSER_ONLY=no</span><br><span class="line">BOOTPROTO=static</span><br><span class="line">DEFROUTE=yes</span><br><span class="line">IPV4_FAILURE_FATAL=no</span><br><span class="line">IPV6INIT=yes</span><br><span class="line">IPV6_AUTOCONF=yes</span><br><span class="line">IPV6_DEFROUTE=yes</span><br><span class="line">IPV6_FAILURE_FATAL=no</span><br><span class="line">IPV6_ADDR_GEN_MODE=stable-privacy</span><br><span class="line">NAME=enp0s3</span><br><span class="line">UUID=b0aed397-8e79-40d9-b007-a2113288e616</span><br><span class="line">DEVICE=enp0s3</span><br><span class="line">ONBOOT=yes</span><br><span class="line">IPADDR=192.168.56.101</span><br><span class="line">NETMASK=255.255.255.0</span><br><span class="line">GATEWAY=182.168.56.1</span><br><span class="line">DNS=8.8.8.8</span><br></pre></td></tr></table></figure><ol start="4"><li>配置完成后重启网卡再查看 IP</li></ol><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">service network restart</span><br><span class="line"></span><br><span class="line">ifconfig</span><br></pre></td></tr></table></figure><p><img src="/postimg/VirtualBox%E8%AE%BE%E7%BD%AE%E7%BD%91%E7%BB%9C%E8%BF%9E%E6%8E%A5%E5%AE%BF%E4%B8%BB%E6%9C%BA/ipconfig.png" alt="IP"></p><h3 id="验证是否配置成功"><a href="#验证是否配置成功" class="headerlink" title="验证是否配置成功"></a>验证是否配置成功</h3><ul><li>在宿主机和虚拟机之间相互 ping，能 ping 通，说明宿主机和虚拟机之间就能互通了。</li></ul><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ping 192.168.1.103</span><br><span class="line"></span><br><span class="line">pint 192.168.56.101</span><br></pre></td></tr></table></figure><ul><li>在 linux 上 ping 百度的地址，如果能通说明虚拟机能连接外网了。</li></ul><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ping www.baidu.com</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> 软件配置 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 软件 </tag>
+            
+            <tag> 虚拟机 </tag>
+            
+            <tag> virtual box </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>本地音乐播放器-foobar2000</title>
       <link href="2021/06/05/%E6%9C%AC%E5%9C%B0%E9%9F%B3%E4%B9%90%E6%92%AD%E6%94%BE%E5%99%A8-foobar2000/"/>
       <url>2021/06/05/%E6%9C%AC%E5%9C%B0%E9%9F%B3%E4%B9%90%E6%92%AD%E6%94%BE%E5%99%A8-foobar2000/</url>
