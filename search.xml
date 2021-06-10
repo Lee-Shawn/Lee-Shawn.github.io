@@ -11,6 +11,26 @@
         <content type="html"><![CDATA[]]></content>
       
       
+      <categories>
+          
+          <category> 项目开发 </category>
+          
+          <category> 谷粒商城 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> linux </tag>
+            
+            <tag> docker </tag>
+            
+            <tag> mysql </tag>
+            
+            <tag> redis </tag>
+            
+        </tags>
       
     </entry>
     
@@ -77,7 +97,7 @@
       <link href="2021/06/04/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E5%8F%8C%E9%93%BE%E8%A1%A8/"/>
       <url>2021/06/04/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E5%8F%8C%E9%93%BE%E8%A1%A8/</url>
       
-        <content type="html"><![CDATA[<div class="note info flat"><p>单链表只有一个后继指针，所以只能从前往后遍历，无法向前遍历寻找前面的结点。双链表除了有后继指针之外，还有一个<strong>指向前一个结点的前驱指针</strong>，这样既可以往后遍历，也可以往前遍历。</p></div><h2 id="双链表结点"><a href="#双链表结点" class="headerlink" title="双链表结点"></a>双链表结点</h2><p>双链表有两个指针域和一个数据域，数据域存放数据，两个指针域分别指向<strong>前驱结点</strong>和<strong>后继结点</strong>。</p>]]></content>
+        <content type="html"><![CDATA[<div class="note info flat"><p>单链表只有一个后继指针，所以只能从前往后遍历，无法向前遍历寻找前面的结点。双链表除了有后继指针之外，还有一个<strong>指向前一个结点的前驱指针</strong>，这样既可以往后遍历，也可以往前遍历。</p></div><h2 id="双链表结点"><a href="#双链表结点" class="headerlink" title="双链表结点"></a>双链表结点</h2><p>双链表有两个指针域和一个数据域，数据域存放数据，两个指针域分别指向<strong>前驱结点</strong>和<strong>后继结点</strong>。</p><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DoubleListNode</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> id;</span><br><span class="line">    DoubleListNode previous;</span><br><span class="line">    DoubleListNode next;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">DoubleListNode</span><span class="params">(<span class="keyword">int</span> id)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.id = id;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="双链表"><a href="#双链表" class="headerlink" title="双链表"></a>双链表</h2><p>双链表有前驱指针，所以寻找当前结点的前一个结点只需要 O(1) 的时间复杂度即可。单链表只能从前向后遍历，双链表可以从头遍历，也可以从后往前遍历，在操作上更灵活。</p><h2 id="创建双链表"><a href="#创建双链表" class="headerlink" title="创建双链表"></a>创建双链表</h2><p>和单链表一样，双链表也可以使用<strong>头插法</strong>和<strong>尾插法</strong>建立双链表。在建立链表时，<strong>使用带头结点的链表进行插入和删除操作时更方便</strong>。使用头结点，在对首结点和尾结点进行操作时，和其他普通结点操作一样，如果没有头结点，操作首结点和尾结点时要进行额外的判断处理。</p><h3 id="头插法建立双链表"><a href="#头插法建立双链表" class="headerlink" title="头插法建立双链表"></a>头插法建立双链表</h3><p>头插法建立双链表，每次插入的新结点都插入到头结点后面作为新的首结点。在插入的过程中，要保证链表不能出现断链的情况，否则无法找到后面的结点。</p><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">DoubleListNode head = <span class="keyword">new</span> DoubleListNode(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * 头插法建立双链表</span></span><br><span class="line"><span class="comment">  * <span class="doctag">@param</span> n 节点个数</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">headCreateDoubleLinkedList</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (n &lt;= <span class="number">0</span>) &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;参数不合法！&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 建立第一个节点</span></span><br><span class="line">    DoubleListNode first = <span class="keyword">new</span> DoubleListNode(<span class="number">1</span>);</span><br><span class="line">    <span class="comment">// 头节点前驱指针和第一个节点后继指针置为空</span></span><br><span class="line">    head.previous = <span class="keyword">null</span>;</span><br><span class="line">    head.next = first;</span><br><span class="line">    first.previous = head;</span><br><span class="line">    first.next = <span class="keyword">null</span>;</span><br><span class="line">    <span class="comment">// 循环建立节点插入头节点后面</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">2</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        DoubleListNode node = <span class="keyword">new</span> DoubleListNode(i);</span><br><span class="line">        node.next = head.next;</span><br><span class="line">        head.next.previous = node;</span><br><span class="line">        node.previous = head;</span><br><span class="line">        head.next = node;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
       
       
       <categories>
