@@ -8,7 +8,7 @@
       <link href="2021/06/22/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E7%BA%A6%E7%91%9F%E5%A4%AB%E7%8E%AF/"/>
       <url>2021/06/22/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E7%BA%A6%E7%91%9F%E5%A4%AB%E7%8E%AF/</url>
       
-        <content type="html"><![CDATA[]]></content>
+        <content type="html"><![CDATA[<div class="note info flat"><p>无论是单链表还是双链表都只能从头结点开始往后遍历，这样处理有些问题就不太方便，环形链表可以很好的解决这个问题。环形链表的尾结点指针不再为空，而是指向了头结点，这样的话任意一个结点都是头结点，也就是说可以从任意一个结点开始遍历。</p></div>]]></content>
       
       
       <categories>
@@ -92,9 +92,9 @@
             
             <tag> java </tag>
             
-            <tag> springboot </tag>
-            
             <tag> mysql </tag>
+            
+            <tag> springboot </tag>
             
             <tag> maven </tag>
             
@@ -123,11 +123,11 @@
       
         <tags>
             
-            <tag> mysql </tag>
-            
             <tag> linux </tag>
             
             <tag> docker </tag>
+            
+            <tag> mysql </tag>
             
             <tag> redis </tag>
             
